@@ -1,0 +1,111 @@
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace final.Pages
+{
+    class SalaryTaxesCalculatorPage : BasePage
+    {
+        private const string PageAddress = "https://www.bankai.lt/skaiciuokles/atlyginimo";
+
+        private SelectElement _salarySelect => new SelectElement(Driver.FindElement(By.Id("atlyginimas")));
+        private IWebElement _amountInput => Driver.FindElement(By.Id("suma"));
+        private SelectElement _npdCalculationSelect => new SelectElement(Driver.FindElement(By.Id("kaip_npd")));
+        private IWebElement _npdAmount => Driver.FindElement(By.Id("suma_npd"));
+        private SelectElement _children => new SelectElement(Driver.FindElement(By.Id("vaikai")));
+        private SelectElement _marriage => new SelectElement(Driver.FindElement(By.Id("santuoka")));
+        private IWebElement _pensionCheckbox => Driver.FindElement(By.Id("papildomas"));
+        private IWebElement _resultTotalWorkPlaceCost => Driver.FindElement(By.Id("vietos_kaina_out"));
+        private IWebElement _resultNetSalary => Driver.FindElement(By.Id("i_rankas_out"));
+        public SalaryTaxesCalculatorPage(IWebDriver webDriver) : base(webDriver) { }
+
+        public SalaryTaxesCalculatorPage NavigateToDefaultPage()
+        {
+            if (Driver.Url != PageAddress)
+            {
+                Driver.Url = PageAddress;
+            }
+
+            return this;
+        }
+
+
+
+        public SalaryTaxesCalculatorPage SelectSalaryByValue(string value)
+        {
+            _salarySelect.SelectByValue(value);
+
+            return this;
+        }
+
+        public SalaryTaxesCalculatorPage InsertAmount(string amount)
+        {
+            _amountInput.Clear();
+            _amountInput.SendKeys(amount);
+
+            return this;
+        }
+
+        public SalaryTaxesCalculatorPage SelectNpdCalculationType(string value)
+        {
+            _npdCalculationSelect.SelectByValue(value);
+
+            return this;
+        }
+
+        public SalaryTaxesCalculatorPage InsertNpdAmount(string npdAmount)
+        {
+            _npdAmount.Clear();
+            _npdAmount.SendKeys(npdAmount);
+
+            return this;
+        }
+
+        public SalaryTaxesCalculatorPage SelectChildrenByValue(string value)
+        {
+            _children.SelectByValue(value);
+
+            return this;
+        }
+
+        public SalaryTaxesCalculatorPage SelectMarriageByValue(string value)
+        {
+            _marriage.SelectByValue(value);
+
+            return this;
+        }
+
+
+        public SalaryTaxesCalculatorPage TickPensionCheckbox()
+        {
+            _pensionCheckbox.Click();
+            
+            return this;
+        }
+
+        public SalaryTaxesCalculatorPage CheckWhatISTotalWorplaceCost(string expectedAmount1)
+        {
+            string totalWorkplaceCost = _resultTotalWorkPlaceCost.Text.Trim().Replace(" ", "");
+            Console.WriteLine(totalWorkplaceCost);
+            Assert.IsTrue(expectedAmount1 == totalWorkplaceCost, "Incorrect amount!");
+
+            return this;
+        }
+
+        public SalaryTaxesCalculatorPage CheckWhatIsNetSalary(string expectedAmount2)
+        {
+            string netSalary = _resultNetSalary.Text.Trim().Replace(" ", "");
+            Console.WriteLine(netSalary);
+            Assert.IsTrue(expectedAmount2 == netSalary, "Incorrect amount!");
+
+            return this;
+        }
+    }
+}
