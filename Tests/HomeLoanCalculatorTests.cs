@@ -13,6 +13,7 @@ namespace final.Tests
         public static void TestHomeLoanCalculatorSumWithInterests1()
         {
             _homeLoanCalculatorPage.NavigateToDefaultPage()
+                .ClickBannerCloseInIframe()
                 .InsertCreditSum("150000")
                 .InsertInterest1("2")
                 .ClickCreditType1()
@@ -28,6 +29,7 @@ namespace final.Tests
         public static void TestHomeLoanCalculatorSumWithInterests2()
         {
             _homeLoanCalculatorPage.NavigateToDefaultPage()
+                .ClickBannerCloseInIframe()
                 .InsertCreditSum("150000")
                 .InsertInterest1("2")
                 .ClickCreditType1()

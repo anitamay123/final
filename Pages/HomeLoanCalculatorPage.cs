@@ -1,13 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace final.Pages
 {
@@ -15,6 +9,7 @@ namespace final.Pages
     {
         private const string PageAddress = "https://www.bankai.lt/paskolos/busto-paskolos-skaiciuokle";
 
+        private IWebElement _bannerClose => Driver.FindElement(By.CssSelector("#cbb > svg > path"));
         private IWebElement _creditSumInput => Driver.FindElement(By.Id("counter_suma"));
         private IWebElement _interestInput1 => Driver.FindElement(By.Id("counter_palukanos_a"));
         private IWebElement _creditType1 => Driver.FindElement(By.Id("s2id_ee1"));
@@ -26,13 +21,25 @@ namespace final.Pages
         private IWebElement _resultSumWithInterests1 =>Driver.FindElement(By.CssSelector("#content > div > div > div > div.w1000 > div.paskolos-skaiciuokle-rezultatai > div.variantai > div:nth-child(1) > div > div:nth-child(8) > div > span.rSa"));
         private IWebElement _resultSumWithInterests2 => Driver.FindElement(By.CssSelector("#content > div > div > div > div.w1000 > div.paskolos-skaiciuokle-rezultatai > div.variantai > div.variantas.dashed > div > div:nth-child(8) > div > span.rSb"));
         public HomeLoanCalculatorPage(IWebDriver webDriver) : base(webDriver) { }
-             
+
         public HomeLoanCalculatorPage NavigateToDefaultPage()
         {
             if (Driver.Url != PageAddress)
             {
                 Driver.Url = PageAddress;
+                
             }
+
+            return this;
+        }
+
+        public HomeLoanCalculatorPage ClickBannerCloseInIframe()
+        {
+            GetWait(5);
+            Driver.SwitchTo().Frame(0);
+            _bannerClose.Click();
+            Driver.SwitchTo().DefaultContent();
+            ScrollDown();
 
             return this;
         }
@@ -95,7 +102,7 @@ namespace final.Pages
         {
             _calculateButton.Click();
             Thread.Sleep(1000);
-            
+                                   
             return this;
         }
 

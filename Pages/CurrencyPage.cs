@@ -15,6 +15,7 @@ namespace final.Pages
     {
         private const string PageAddress = "https://www.bankai.lt/valiutos/valiutu-skaiciuokle";
 
+        private IWebElement _bannerClose => Driver.FindElement(By.CssSelector("#cbb > svg > path"));
         private IWebElement _wantToBuyCheckbox => Driver.FindElement(By.CssSelector(".valiutos-tipas > a:nth-child(3) > div"));
         private IWebElement _currencyAmountInput => Driver.FindElement(By.Id("valiutos_suma"));
         private IWebElement _currencyDropdown => Driver.FindElement(By.Id("s2id_ee1"));
@@ -28,18 +29,30 @@ namespace final.Pages
             if (Driver.Url != PageAddress)
             {
                 Driver.Url = PageAddress;
+                
             }
 
             return this;
         }
 
+        public CurrencyPage ClickBannerCloseInIframe()
+        {
+            GetWait(5);
+            Driver.SwitchTo().Frame(0);
+            _bannerClose.Click();
+            Driver.SwitchTo().DefaultContent();
+            ScrollDown();
+
+            return this;
+        }
+             
 
         public CurrencyPage TickWantToBuyCheckbox()
         {
-            Thread.Sleep(1000);
             _wantToBuyCheckbox.Click();
-            Thread.Sleep(1000);
-            
+            Thread.Sleep(200);
+
+
             return this;
         }
 

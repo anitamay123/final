@@ -13,12 +13,15 @@ namespace final.Tests
         public static void TestCurrencyCalculatorToBuyMauricijausRupija()
         {
             _currencyPage.NavigateToDefaultPage()
+                .ClickBannerCloseInIframe()
                 .TickWantToBuyCheckbox()
+                .ClickBannerCloseInIframe()
                 .InsertCurrencyAmount("5000")
                 .ClickCurrencyDropdown()
                 .ClickMauricijausRupija()
+                /*.ClickBannerCloseInIframe() ne visada randa si baneri ir del to failina testas*/ 
                 .ClickCalculateButton()
-                .CheckWhatIsTheAmountToBuy("115,62EUR");
+                .CheckWhatIsTheAmountToBuy("115,68EUR");
         }
     }
 }

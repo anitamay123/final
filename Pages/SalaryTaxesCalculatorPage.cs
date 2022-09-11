@@ -97,6 +97,7 @@ namespace final.Pages
 
         public SalaryTaxesCalculatorPage CheckWhatIsTotalWorkPlaceCost(string expectedAmount1)
         {
+            Console.WriteLine(expectedAmount1);
             string totalWorkplaceCost = _resultTotalWorkPlaceCost.Text.Trim().Replace(" ", "");
             Console.WriteLine(totalWorkplaceCost);
             Assert.IsTrue(expectedAmount1 == totalWorkplaceCost, "Incorrect amount!");
@@ -106,6 +107,7 @@ namespace final.Pages
 
         public SalaryTaxesCalculatorPage CheckWhatIsNetSalary(string expectedAmount2)
         {
+            Console.WriteLine(expectedAmount2);
             string netSalary = _resultNetSalary.Text.Trim().Replace(" ", "");
             Console.WriteLine(netSalary);
             Assert.IsTrue(expectedAmount2 == netSalary, "Incorrect amount!");
